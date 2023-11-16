@@ -18,7 +18,7 @@ static char smmObj_name[MAX_NODE][MAX_CHARNAME];
 static int smmObj_type[MAX_NODE];
 static int smmObj_credit[MAX_NODE];
 static int smmObj_energy[MAX_NODE];
-
+static int smmObj_noNode=0;
 
 //object generation
 void smmObj_getNode(char* name, int type, int credit, int energy)

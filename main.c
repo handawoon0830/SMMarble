@@ -46,13 +46,13 @@ void generatePlayers(int n, int initEnergy)
 	for (i=0; i<n; i++){
 		
 		//input name
-		printf(); //안내 문구 입력 
+		printf("input the player's name:"); //안내 문구 입력 
 		scanf("%s", player_name[i]);
 	
 		//input position
 		player_position[i]=0;
 		//input energy
-		player_energy[i]= 초기설정한 에너지 값; 
+		player_energy[i]= 10; //초기설정한 에너지 값; 
 	}
 }
 
@@ -123,7 +123,7 @@ int main(int argc, const char * argv[]) {
     int i;
     
     for ( i=0; i<board_nr; i++)
-    	printf("node %i : %s, %i(%s)\n", i, smmObj_getNodename(i),smmObj_getNodetype(i), smmObj_getNodeName(int type));
+    	printf("node %i : %s, %i(%s)\n", i, smmObj_getNodename(i),smmObj_getNodetype(i), smmObj_getNodeName((int) type));
     
     
     #if 0 
@@ -171,9 +171,9 @@ int main(int argc, const char * argv[]) {
     	fflush(stdin); //원하지 않는 입력 (엔터 등)을 없앰 scanf뒤에 꼭 넣는게 좋음 
     
     }
-    while (player_nr<0 || player > MAX_PLAYER); 
+    while (player_nr<0 || player_nr > MAX_PLAYER); 
     
-    generatePlayers(plater_nr, initEnergy);
+    generatePlayers(player_nr, (int) Energy);
     
     #if 0
     //3. SM Marble game starts ---------------------------------------------------------------------------------
@@ -184,7 +184,7 @@ int main(int argc, const char * argv[]) {
         //4-1. initial printing
         //printPlayerStatus();
         
-        //4-2. die rolling (if not in experiment)
+        //4-2. die rolling (if not in experiment) - 20231116 요기까지 가능 
         
         
         //4-3. go forward

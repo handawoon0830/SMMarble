@@ -29,33 +29,56 @@ char* smmObj_getNodeName(int type)
 	return (char*)smmNodeName[type];
 }
 
-
+#if 0
 static char smmObj_name[MAX_NODE][MAX_CHARNAME];
 static int smmObj_type[MAX_NODE];
 static int smmObj_credit[MAX_NODE];
 static int smmObj_energy[MAX_NODE];
 static int smmObj_noNode=0;
+//이거 구조체로 바꿔야 함
+#endif
+
+static int smmObj_noNode=0;
+
+struct smmObj_t{
+	char smmObj_name[MAX_CHARNAME];
+	int smmObj_type;
+	int smmObj_credit;
+	int smmObj_energy;
+};
+
+struct smmObj_t smm_node[MAX_NODE]
 
 //object generation
 void smmObj_getNode(char* name, int type, int credit, int energy)
 {
+	#if 0
 	strcpy(smmObj_name[smmObj_noNode],name);
     smmObj_type[smmObj_noNode] = type;
     smmObj_credit[smmObj_noNode] = credit;
     smmObj_energy[smmObj_noNode] = energy;
+    // 요기도 바뀌어야함 구조체로 
+    #endif
+    
+    strcpy(smm_node[smmObj_noNode].name, name);
+    smm_node[smmObj_noNode].type= type;
+    smmObj_credit[smmObj_noNode] = credit; ~
+    smmObj_energy[smmObj_noNode] = energy; ~
+    
     
     smmObj_noNode++;
 }
 
 char mmObj_getNodeName(int node_nr)
 {
-	return sumObj_type[nde_nr];
+	return smm_node[nde_nr].type;
 }
 
 int smmObj_getNodeType(int node_nr)
 {
-	return sumObj_type[nde_nr];
+	return smm_node[nde_nr].credit;
 }
+int smmObj_get~energy~;
 
 //member retrieving
 

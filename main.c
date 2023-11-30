@@ -173,7 +173,7 @@ int main(int argc, const char * argv[]) {
     }
     while (player_nr<0 || player_nr > MAX_PLAYER); 
     
-    generatePlayers(player_nr, (int) Energy);
+    generatePlayers(player_nr, initEnergy);
     
     #if 0
     //3. SM Marble game starts ---------------------------------------------------------------------------------

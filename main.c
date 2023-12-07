@@ -23,9 +23,23 @@ static int food_nr;
 static int festival_nr;
 
 static int player_nr;
+
+
+typedef struct player{
+	int energy;
+	int position;
+	char name[MAX_CHARNAME];
+	int accumCredit;
+	int flag_graduate;
+	
+}player_t;
+
+static player_t cur_player[MAX_PLAYER];
+#if 0
 static int player_energy[MAX_PLAYER];
 static int player_position[MAX_PLAYER];
 static char player_name[MAX_PLAYER][MAX_CHARNAME];
+#endif
 
 //function prototypes
 #if 0
@@ -46,13 +60,18 @@ void generatePlayers(int n, int initEnergy)
 	for (i=0; i<n; i++){
 		
 		//input name
-		printf("input the player's name:"); //안내 문구 입력 
-		scanf("%s", player_name[i]);
+		printf("input player %i's name:", i); //안내 문구 입력 
+		scanf("%s", cur_player[i].name);
+		fflush(stdin);
 	
 		//input position
-		player_position[i]=0;
+		//player_position= 0;
+		cur_player[i].position=0;
+		
 		//input energy
-		player_energy[i]= 10; //초기설정한 에너지 값; 
+		//cur_player[i].energy= initEnergy; //초기설정한 에너지 값;
+		cur_player[i].energy = initEnergy;
+		cur_player[i]. 
 	}
 }
 
@@ -76,6 +95,8 @@ int rolldie(int player)
 //action code when a player stays at a node
 void actionNode(int player)
 {
+	int type = smmObj_getNodeType(cur_player[player].position);
+	
     switch(type)
     {
         //case lecture:
@@ -84,6 +105,11 @@ void actionNode(int player)
     }
 }
 #endif
+void goFoward(int player, int step) {
+	cur_player[player].position += step;
+	
+	printf("%s go to node %i (name)")
+}
 
 
 int main(int argc, const char * argv[]) {
@@ -189,6 +215,7 @@ int main(int argc, const char * argv[]) {
         
         //4-3. go forward
         //goForward();
+        go_Forward
 
 		//4-4. take action at the destination node of the board
         //actionNode();

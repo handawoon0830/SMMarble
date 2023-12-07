@@ -62,8 +62,8 @@ void smmObj_getNode(char* name, int type, int credit, int energy)
     
     strcpy(smm_node[smmObj_noNode].name, name);
     smm_node[smmObj_noNode].type= type;
-    smmObj_credit[smmObj_noNode] = credit; ~
-    smmObj_energy[smmObj_noNode] = energy; ~
+    smm_node[smmObj_noNode].credit = credit;
+    smm_node[smmObj_noNode].energy= energy;
     
     
     smmObj_noNode++;
@@ -78,7 +78,10 @@ int smmObj_getNodeType(int node_nr)
 {
 	return smm_node[nde_nr].credit;
 }
-int smmObj_get~energy~;
+int smmObj_getNodeenergy(int node_nr)
+{
+	return smm_node[node_nr].energy;
+}
 
 //member retrieving
 

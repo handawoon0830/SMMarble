@@ -127,7 +127,7 @@ void actionNode(int player)
     {
         //case lecture:
         case SMMNODE_TYPE_LECTURE:
-        	if(){
+        	
         	cur_player[player].accumCredit += smmObj_getNodeCredit(boardPtr);
         	cur_player[player].energy -= smmObj_getNodeEnergy(boardPtr);
         	
@@ -135,7 +135,7 @@ void actionNode(int player)
         	smmdb_addTail(LISTNO_OFFSET_GRADE + player, gradePtr);
         	
         	break;
-        	}
+        	
         	
         default:
             break;

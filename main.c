@@ -54,6 +54,30 @@ void* findGrade(int player, char *lectureName); //find the grade from the player
 void printGrades(int player); //print all the grade history of the player
 #endif
 
+void printGrades(int player){
+	int i;
+	void *gradePtr;
+	for (i=0; i<smmdb_len(LISTNO_OFFSET_GRADE + player); i++0
+	{
+		gradePtr = smmdb_getData(LISTNO_OFFSET_GRADE + player, i);
+		printf("%s : %i\n", smmobj_getNodename(gradePtr), smmobj_getNodeGrade(gradePtr));
+	}
+}
+
+void printPlayerStatus(void)
+{
+    int i;
+     
+    for (i=0;i<player_nr;i++)
+    {
+    	printf("%s : credit %i, energy %i, position %i\n", 
+                	cur_player[i].name,
+                    cur_player[i].accumCredit,
+                    cur_player[i].energy,
+                    cur_player[i].position);
+    }
+}
+
 void generatePlayers(int n, int initEnergy)
 {
 	int i;
@@ -71,7 +95,8 @@ void generatePlayers(int n, int initEnergy)
 		//input energy
 		//cur_player[i].energy= initEnergy; //초기설정한 에너지 값;
 		cur_player[i].energy = initEnergy;
-		cur_player[i]. 
+		cur_player[i].accumCredit =0;
+		cur_player[i].flag_graduate = 0;
 	}
 }
 
@@ -83,32 +108,51 @@ int rolldie(int player)
     c = getchar();
     fflush(stdin);
     
-#if 0
     if (c == 'g')
         printGrades(player);
-#endif
     
     return (rand()%MAX_DIE + 1);
 }
 
-#if 0 // if -end if 부분을 주석 처리하는 것 
+ // if -end if 부분을 주석 처리하는 것 
 //action code when a player stays at a node
 void actionNode(int player)
 {
-	int type = smmObj_getNodeType(cur_player[player].position);
+	void *boardPtr = smmdb_getData(LISTNO_NODE, cur_player[player].position);
+	//int type = smmObj_getNodeType(cur_player[player].position);
+	int type = smmObj_getNodeType( boardPtr);
+	char *name = smmObj_getNodeName( boardPtr);
+	void *gradePtr;
 	
     switch(type)
     {
         //case lecture:
+        case SMMNODE_TYPE_LECTURE:
+        	if
+        	cur_player[player].accumCredit += smm)bj_getNodeCredit(boardPtr);
+        	cur_player[player].energy -= smmObj_getNodeEnergy(boardPtr);
+        	
+        	gradePtr = smmObj_genObject(name, smmObjType_grade, 0, smmObj_getNodeCredit(boardPtr),0, ??);
+        	smmdb_addTail(LISTNO_OFFSET_GRADE + player, gradePtr);
+        	
+        	break;
+        	
         default:
             break;
     }
 }
-#endif
+
 void goFoward(int player, int step) {
-	cur_player[player].position += step;
 	
-	printf("%s go to node %i (name)")
+	void *boardPtr;
+	cur_player[player].position += step;
+	boardPtr = smmdb_getData(LISTNO_NODE, cur_player[player].position);
+	
+	
+	printf("%s go to node %i (name: %s)\n",
+				cur_player[player].name,
+				cur_player[player].position,
+				smmObj_getNodeName(boardPtr));
 }
 
 
@@ -119,6 +163,9 @@ int main(int argc, const char * argv[]) {
     int type;
     int credit;
     int energy;
+    int i;
+    int initEnergy;
+    int turn=0;
     
     board_nr = 0;
     food_nr = 0;
@@ -140,16 +187,28 @@ int main(int argc, const char * argv[]) {
     while (fscanf(fp,"%s%i%i%i",name,&type, &credit, &energy)==4 ) //read a node parameter set
     {
         //store the parameter set
-        smmObj_getNode(name, type, credit, energy);
+        void *boardObj = smmobj_genObject(name, smmObjType_board, type, credit, energy, 0);
+        smmdb_addTail(LISTNO_NODE, boardObj);
+        
+        if (type == SMMNODE_TYPE_HOME)
+        	initEnergy = energy;
         board_nr++;
     }
     fclose(fp);
     printf("Total number of board nodes : %i\n", board_nr);
     
-    int i;
-    
     for ( i=0; i<board_nr; i++)
-    	printf("node %i : %s, %i(%s)\n", i, smmObj_getNodename(i),smmObj_getNodetype(i), smmObj_getNodeName((int) type));
+    {
+    	void *boardObj = smmdb_getdata(LISTNO_NODE,i);
+    	
+    	
+    	printf("node %i : %s, %i(%s), credit %i, energy %i\n",
+					 i, smmObj_getNodename(boardObj),
+					 smmObj_getNodetype(boardObj),
+					 smmObj_getTypeName(smmobj_getNodeType(boardObj)),
+					 smmObj_getNodeCredit(boardObj),
+					 smmObj_getNodeEnergy(boardObj));
+    }
     
     
     #if 0 
@@ -169,7 +228,6 @@ int main(int argc, const char * argv[]) {
     printf("Total number of food cards : %i\n", food_nr);
     #endif
     
-    #if 0
     //3. festival card config 
     if ((fp = fopen(FESTFILEPATH,"r")) == NULL)
     {
@@ -184,7 +242,6 @@ int main(int argc, const char * argv[]) {
     }
     fclose(fp);
     printf("Total number of festival cards : %i\n", festival_nr);
-    #endif
     
     
     //2. Player configuration ---------------------------------------------------------------------------------

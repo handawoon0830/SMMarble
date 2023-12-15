@@ -57,7 +57,7 @@ void printGrades(int player); //print all the grade history of the player
 void printGrades(int player){
 	int i;
 	void *gradePtr;
-	for (i=0; i<smmdb_len(LISTNO_OFFSET_GRADE + player); i++0
+	for (i=0; i<smmdb_len(LISTNO_OFFSET_GRADE + player); i++)
 	{
 		gradePtr = smmdb_getData(LISTNO_OFFSET_GRADE + player, i);
 		printf("%s : %i\n", smmobj_getNodename(gradePtr), smmobj_getNodeGrade(gradePtr));
@@ -113,8 +113,7 @@ int rolldie(int player)
     
     return (rand()%MAX_DIE + 1);
 }
-
- // if -end if 부분을 주석 처리하는 것 
+ 
 //action code when a player stays at a node
 void actionNode(int player)
 {
@@ -128,14 +127,15 @@ void actionNode(int player)
     {
         //case lecture:
         case SMMNODE_TYPE_LECTURE:
-        	if
-        	cur_player[player].accumCredit += smm)bj_getNodeCredit(boardPtr);
+        	if(){
+        	cur_player[player].accumCredit += smmObj_getNodeCredit(boardPtr);
         	cur_player[player].energy -= smmObj_getNodeEnergy(boardPtr);
         	
         	gradePtr = smmObj_genObject(name, smmObjType_grade, 0, smmObj_getNodeCredit(boardPtr),0, ??);
         	smmdb_addTail(LISTNO_OFFSET_GRADE + player, gradePtr);
         	
         	break;
+        	}
         	
         default:
             break;
@@ -256,31 +256,33 @@ int main(int argc, const char * argv[]) {
     }
     while (player_nr<0 || player_nr > MAX_PLAYER); 
     
+    cur_player = (player_t*)malloc(player_nr*sizeof(player_t));
     generatePlayers(player_nr, initEnergy);
     
-    #if 0
     //3. SM Marble game starts ---------------------------------------------------------------------------------
-    while () //is anybody graduated?
+    while (1) //is anybody graduated?
     {
         int die_result;
         
         //4-1. initial printing
-        //printPlayerStatus();
+        printPlayerStatus();
         
-        //4-2. die rolling (if not in experiment) - 20231116 요기까지 가능 
-        
+        //4-2. die rolling (if not in experiment) 
+        die_result = rolldie(turn);
         
         //4-3. go forward
-        //goForward();
-        go_Forward
+        goForward(turn, die_result);
 
 		//4-4. take action at the destination node of the board
-        //actionNode();
+        actionNode(turn);
         
         //4-5. next turn
+        turn = (turn + 1)%player_nr;
         
     }
-    #endif
     
+    
+    free(cur_player);
+    system("PAUSE");
     return 0;
 }

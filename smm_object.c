@@ -29,44 +29,53 @@ char* smmObj_getNodeName(int type)
 	return (char*)smmNodeName[type];
 }
 
-#if 0
+typedef enum smmObjGrade {
+	smmObjGrade_Ap = 0,
+	smmObjGrade_A0,
+	smmObjGrade_Am,
+	smmObjGrade_Bp,
+	smmObjGrade_B0,
+	smmObjGrade_Cp,
+	smmObjGrade_C0,
+	smmObjGrade_Cm
+} smmObjGrade_e;
+
+/*
 static char smmObj_name[MAX_NODE][MAX_CHARNAME];
 static int smmObj_type[MAX_NODE];
 static int smmObj_credit[MAX_NODE];
 static int smmObj_energy[MAX_NODE];
 static int smmObj_noNode=0;
+*/
 //이거 구조체로 바꿔야 함
-#endif
 
-static int smmObj_noNode=0;
+typedef struct smmObject{
+	char name[MAX_CHARNAME];
+	smmObjType_e objType;
+	int type;
+	int credit;
+	int energy;
+} smmObject_t;
 
-struct smmObj_t{
-	char smmObj_name[MAX_CHARNAME];
-	int smmObj_type;
-	int smmObj_credit;
-	int smmObj_energy;
-};
-
-struct smmObj_t smm_node[MAX_NODE]
+//struct smmObj_t smm_node[MAX_NODE];
+//static int smmObj_noNode=0;
 
 //object generation
-void smmObj_getNode(char* name, int type, int credit, int energy)
+void smmObj_getNode(char* name, smmObjType_e objType, int type, int credit, int energy)
 {
-	#if 0
-	strcpy(smmObj_name[smmObj_noNode],name);
-    smmObj_type[smmObj_noNode] = type;
-    smmObj_credit[smmObj_noNode] = credit;
-    smmObj_energy[smmObj_noNode] = energy;
-    // 요기도 바뀌어야함 구조체로 
-    #endif
-    
-    strcpy(smm_node[smmObj_noNode].name, name);
-    smm_node[smmObj_noNode].type= type;
-    smm_node[smmObj_noNode].credit = credit;
-    smm_node[smmObj_noNode].energy= energy;
-    
-    
-    smmObj_noNode++;
+	smmObject_t* ptr;
+	
+	ptr = (smmObject_t*)malloc(sizeof(smmObject_t));
+	
+	strcpy(ptr->name ,name);
+	ptr->objType = objType;
+	ptr->type = type;
+	ptr->credit = credit;
+	ptr->energy = energy;
+	ptr->grade= grade;
+	
+	return ptr;
+   
 }
 
 char mmObj_getNodeName(int node_nr)
@@ -88,9 +97,11 @@ int smmObj_getNodeenergy(int node_nr)
 
 
 //element to string
-char* smmObj_getNodeName(smmNode_e type)
+char* smmObj_getNodeName(void* obj)
 {
-    return smmNodeName[type];
+	smmObject_t* ptr = (smmObject_t*)obj;
+	
+    return ptr->name;
 }
 
 char* smmObj_getGradeName(smmGrade_e grade)

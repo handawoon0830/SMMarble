@@ -18,6 +18,11 @@
 
 #define SMMNODE_TYPE_MAX 			7
 
+typedef enum smmObjType{
+	smmObjType_board =0;
+	smmObjType_card,
+	smmObjType_grade
+} smmObjType_e;
 
 /* node type :
     lecture,
@@ -45,12 +50,16 @@
 
 
 //object generation
-int smmObj_genNode(void);
+void smmObj_genNode(char *name, smmObjType_e objType, int type, int credit, int energy, smmObjGrade_e grade);
 
 //member retrieving
-
+char* smmObj_getNodeName(int node_nr);
+int smmObj_getNodeType(int node_nr);
+int smmObj_getNodeCredit(int node_nr);
+int smmObj_getNodeEnergy(int node_nr);
 
 //element to string
+char* smmObj_getTypeName(int type);
 
 
 

@@ -34,6 +34,16 @@ typedef enum smmObjType{
     festival
 */
 
+typedef enum smmObjGrade {
+	smmObjGrade_Ap = 0,
+	smmObjGrade_A0,
+	smmObjGrade_Am,
+	smmObjGrade_Bp,
+	smmObjGrade_B0,
+	smmObjGrade_Cp,
+	smmObjGrade_C0,
+	smmObjGrade_Cm
+} smmObjGrade_e;
 
 /* grade :
     A+,

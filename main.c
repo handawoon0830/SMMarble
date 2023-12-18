@@ -131,7 +131,7 @@ void actionNode(int player)
         	cur_player[player].accumCredit += smmObj_getNodeCredit(boardPtr);
         	cur_player[player].energy -= smmObj_getNodeEnergy(boardPtr);
         	
-        	gradePtr = smmObj_genObject(name, smmObjType_grade, 0, smmObj_getNodeCredit(boardPtr),0, ??);
+        	gradePtr = smmObj_genObject(name, smmObjType_grade, 0, smmObj_getNodeCredit(boardPtr),0, gradePtr);
         	smmdb_addTail(LISTNO_OFFSET_GRADE + player, gradePtr);
         	
         	break;

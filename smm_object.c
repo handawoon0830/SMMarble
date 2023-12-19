@@ -113,17 +113,7 @@ int smmObj_getNodeenergy(void* obj)
 
 
 //element to string
-/*
-char* smmObj_getNodeName(void* obj)
-{
-	smmObject_t* ptr = (smmObject_t*)obj;
-	
-    return ptr->name;
-}
 
-char* smmObj_getGradeName(smmGrade_e grade)
-{
-    return smmGradeName[grade];
-}
-*/
+
+
 

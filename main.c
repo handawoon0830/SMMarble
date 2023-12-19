@@ -34,23 +34,28 @@ typedef struct player{
 	
 }player_t;
 
-static player_t cur_player[MAX_PLAYER];
+static player_t cur_player[MAX_PLAYER]; //curplayer라는 배열안에 player_t 정보들이 들어감. 
+
+
 #if 0
 static int player_energy[MAX_PLAYER];
 static int player_position[MAX_PLAYER];
 static char player_name[MAX_PLAYER][MAX_CHARNAME];
-#endif
+#endif //아마 위에 player_t를 원래 나열한거, 구조체로 바꾸기 전. 
 
 //function prototypes
 #if 0
-int isGraduated(void); //check if any player is graduated
-void generatePlayers(int n, int initEnergy); //generate a new player
-void printGrades(int player); //print grade history of the player
+int isGraduated(void); //check if any player is graduated 졸업했는지 확인하는 함수 
+void generatePlayers(int n, int initEnergy); //generate a new player 새로운 플레이어 생성 
+void printGrades(int player); //print grade history of the player 플레이어의 강의 이름, 학점, 성적을 전부 출력 
 void goForward(int player, int step); //make player go "step" steps on the board (check if player is graduated)
-void printPlayerStatus(void); //print all player status at the beginning of each turn
-float calcAverageGrade(int player); //calculate average grade of the player
+//플레이어 이동 
+void printPlayerStatus(void); //print all player status at the beginning of each turn 매턴 플레이어 상태 출력 
+float calcAverageGrade(int player); //calculate average grade of the player 왜 있는거지 
 smmGrade_e takeLecture(int player, char *lectureName, int credit); //take the lecture (insert a grade of the player)
+//플레이어가 어떤 강의를 들었고 얻은 에너지? 
 void* findGrade(int player, char *lectureName); //find the grade from the player's grade history
+//
 void printGrades(int player); //print all the grade history of the player
 #endif
 
@@ -285,7 +290,8 @@ int main(int argc, const char * argv[]) {
     }
     
     
-    free(cur_player);
+    
     system("PAUSE");
+    free(cur_player);
     return 0;
 }

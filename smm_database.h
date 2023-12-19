@@ -8,6 +8,7 @@
 #ifndef smm_database_h
 #define smm_database_h
 
+
 #define LISTNO_NODE             0
 #define LISTNO_FOODCARD         1
 #define LISTNO_FESTCARD         2

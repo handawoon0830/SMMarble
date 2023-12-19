@@ -28,7 +28,7 @@ char* smmObj_getNodeName(int type)
 {
 	return (char*)smmNodeName[type];
 }
-
+/*
 typedef enum smmObjGrade {
 	smmObjGrade_Ap = 0,
 	smmObjGrade_A0,
@@ -39,7 +39,7 @@ typedef enum smmObjGrade {
 	smmObjGrade_C0,
 	smmObjGrade_Cm
 } smmObjGrade_e;
-
+*/
 /*
 static char smmObj_name[MAX_NODE][MAX_CHARNAME];
 static int smmObj_type[MAX_NODE];
@@ -55,6 +55,7 @@ typedef struct smmObject{
 	int type;
 	int credit;
 	int energy;
+	char grade;
 } smmObject_t;
 
 //struct smmObj_t smm_node[MAX_NODE];

@@ -228,6 +228,7 @@ int main(int argc, const char * argv[]) {
     printf("Total number of food cards : %i\n", food_nr);
     #endif
     
+    #if 0 
     //3. festival card config 
     if ((fp = fopen(FESTFILEPATH,"r")) == NULL)
     {
@@ -236,13 +237,13 @@ int main(int argc, const char * argv[]) {
     }
     
     printf("\n\nReading festival card component......\n");
-    while () //read a festival card string
+    while (fscanf(fp,"%s%i",name,&type)==2) //read a festival card string
     {
         //store the parameter set
     }
     fclose(fp);
     printf("Total number of festival cards : %i\n", festival_nr);
-    
+    #endif
     
     //2. Player configuration ---------------------------------------------------------------------------------
     
@@ -256,6 +257,8 @@ int main(int argc, const char * argv[]) {
     }
     while (player_nr<0 || player_nr > MAX_PLAYER); 
     
+    //static player_t cur_player[MAX_PLAYER]; // 배열 선언을 주석 처리합니다.
+	static player_t *cur_player;
     cur_player = (player_t*)malloc(player_nr*sizeof(player_t));
     generatePlayers(player_nr, initEnergy);
     

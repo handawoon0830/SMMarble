@@ -45,6 +45,7 @@ typedef enum smmObjGrade {
 	smmObjGrade_Cm
 } smmObjGrade_e;
 
+
 /* grade :
     A+,
     A0,
@@ -63,10 +64,10 @@ typedef enum smmObjGrade {
 void smmObj_genNode(char *name, smmObjType_e objType, int type, int credit, int energy, smmObjGrade_e grade);
 
 //member retrieving
-char* smmObj_getNodeName(int node_nr);
-int smmObj_getNodeType(int node_nr);
-int smmObj_getNodeCredit(int node_nr);
-int smmObj_getNodeEnergy(int node_nr);
+char* smmObj_getNodeName(void* obj);
+int smmObj_getNodeType(void* obj);
+int smmObj_getNodeCredit(void* obj);
+int smmObj_getNodeEnergy(void* obj);
 
 //element to string
 char* smmObj_getTypeName(int type);

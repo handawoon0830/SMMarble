@@ -122,7 +122,6 @@ int rolldie(int player)
 void actionNode(int player)
 {
 	void *boardPtr = smmdb_getData(LISTNO_NODE, cur_player[player].position);
-	//int type = smmObj_getNodeType(cur_player[player].position);
 	int type = smmObj_getNodeType( boardPtr);
 	char *name = smmObj_getNodeName( boardPtr);
 	void *gradePtr;
@@ -130,12 +129,12 @@ void actionNode(int player)
     switch(type)
     {
         //case lecture:
-        case SMMNODE_TYPE_LECTURE:
+        case SMMNODE_TYPE_LECTURE: //강의라는 노드에 도착했을때 
         	
-        	cur_player[player].accumCredit += smmObj_getNodeCredit(boardPtr);
-        	cur_player[player].energy -= smmObj_getNodeEnergy(boardPtr);
+        	cur_player[player].accumCredit += smmObj_getNodeCredit(boardPtr); //학점 증가  
+        	cur_player[player].energy -= smmObj_getNodeEnergy(boardPtr);//에너지 감소 
         	
-        	gradePtr = smmObj_genObject(name, smmObjType_grade, 0, smmObj_getNodeCredit(boardPtr),0, gradePtr);
+        	gradePtr = smmObj_genObject(name,  smmObjType_grade, 0, smmObj_getNodeCredit(boardPtr), 0, cur_player[player].accumCredit);
         	smmdb_addTail(LISTNO_OFFSET_GRADE + player, gradePtr);
         	
         	break;
@@ -215,7 +214,6 @@ int main(int argc, const char * argv[]) {
     }
     
     
-    #if 0 
     //2. food card config 
     if ((fp = fopen(FOODFILEPATH,"r")) == NULL)
     {
@@ -224,9 +222,15 @@ int main(int argc, const char * argv[]) {
     }
     
     printf("\n\nReading food card component......\n");
-    while () //read a food parameter set
+    while (fscanf(fp,"%s%i%i",name, &type, &energy)==3) //read a food parameter set
     {
         //store the parameter set
+        void *foodObj = smmobj_genfood(name, type, energy);
+        smmdb_addTail(LISTNO_NODE, boardObj);
+        
+        if (type == SMMNODE_TYPE_RESTAURANT || type == SMMNODE_TYPE_FOODCHANCE)
+        	cur_player[type].energy += ;
+        board_nr++;
     }
     fclose(fp);
     printf("Total number of food cards : %i\n", food_nr);

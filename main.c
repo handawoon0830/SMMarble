@@ -47,7 +47,7 @@ static char player_name[MAX_PLAYER][MAX_CHARNAME];
 #if 0
 int isGraduated(void); //check if any player is graduated 졸업했는지 확인하는 함수 
 void generatePlayers(int n, int initEnergy); //generate a new player 새로운 플레이어 생성 
-void printGrades(int player); //print grade history of the player 플레이어의 강의 이름, 학점, 성적을 전부 출력 
+void printGrades(int player); //완 //print grade history of the player 플레이어의 강의 이름, 학점, 성적을 전부 출력 
 void goForward(int player, int step); //make player go "step" steps on the board (check if player is graduated)
 //플레이어 이동 
 void printPlayerStatus(void); //print all player status at the beginning of each turn 매턴 플레이어 상태 출력 
@@ -55,14 +55,13 @@ float calcAverageGrade(int player); //calculate average grade of the player 왜 �
 smmGrade_e takeLecture(int player, char *lectureName, int credit); //take the lecture (insert a grade of the player)
 //플레이어가 어떤 강의를 들었고 얻은 에너지? 
 void* findGrade(int player, char *lectureName); //find the grade from the player's grade history
-//
-void printGrades(int player); //print all the grade history of the player
+//성적표에서 학점 찾기 
 #endif
 
 void printGrades(int player){
 	int i;
 	void *gradePtr;
-	for (i=0; i<smmdb_len(LISTNO_OFFSET_GRADE + player); i++)
+	for (i=0; i<smmdb_len(LISTNO_OFFSET_GRADE + player); i++) 
 	{
 		gradePtr = smmdb_getData(LISTNO_OFFSET_GRADE + player, i);
 		printf("%s : %i\n", smmobj_getNodename(gradePtr), smmobj_getNodeGrade(gradePtr));

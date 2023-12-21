@@ -39,6 +39,10 @@ int rolldie(int player);
 void actionNode(player_t *cur_player, int player);
 void goForward(player_t *cur_player, int player, int step);
 int main(int argc, const char * argv[]);
+float calcAverageGrade(int player);
+smmObjGrade_e takeLecture(int player, char *lectureName, int credit);
+void* findGrade(int player, char *lectureName);
+int isGraduated(void);
 
 void printGrades(int player) {
     // Your implementation here
@@ -83,15 +87,34 @@ void generatePlayers(player_t *cur_player, int n, int initEnergy) {
 }
 
 int rolldie(int player) {
-    // Your implementation here
+    char c;
+    printf(" Press any key to roll a die (press g to see grade): ");
+    c = getchar();
+    fflush(stdin);
+    
+    if (c == 'g')
+        printGrades(player);
+    
+    return (rand()%MAX_DIE + 1);
 }
 
 void actionNode(player_t *cur_player, int player) {
-    // Your implementation here
+    void *boardPtr = smmdb_getData(LISTNO_NODE, cur_player[player].position);
+	int type = smmObj_getNodeType( boardPtr);
+	char *name = smmObj_getNodeName( boardPtr);
+	void *gradePtr;
 }
 
 void goForward(player_t *cur_player, int player, int step) {
-    // Your implementation here
+	void *boardPtr;
+	cur_player[player].position += step;
+	boardPtr = smmdb_getData(LISTNO_NODE, cur_player[player].position);
+	
+	
+	printf("%s go to node %i (name: %s)\n",
+				cur_player[player].name,
+				cur_player[player].position,
+				smmObj_getNodeName(boardPtr));
 }
 
 int main(int argc, const char * argv[]) {
@@ -123,6 +146,45 @@ int main(int argc, const char * argv[]) {
     // Your implementation here for reading board components
 
     fclose(fp);
+    
+    //1-2. food card config
+    #if 0
+    if ((fp = fopen(FOODFILEPATH,"r")) == NULL)
+    {
+        printf("[ERROR] failed to open %s. This file should be in the same directory of SMMarble.exe.\n", FOODFILEPATH);
+        return -1;
+    }
+    printf("\n\nReading food card component......\n");
+    while (fscanf(fp,"%s%i%i",name, &type, &energy)==3) //read a food parameter set
+    {
+        //store the parameter set
+        void *foodObj = smmobj_genfood(name, type, energy);
+        smmdb_addTail(LISTNO_NODE, boardObj);
+        
+        if (type == SMMNODE_TYPE_RESTAURANT || type == SMMNODE_TYPE_FOODCHANCE)
+        	cur_player[type].energy += foodObj;
+        board_nr++;
+    }
+    fclose(fp);
+    printf("Total number of food cards : %i\n", food_nr);
+    #endif
+    
+    //1-3. festival card config
+    #if 0
+    if ((fp = fopen(FESTFILEPATH,"r")) == NULL)
+    {
+        printf("[ERROR] failed to open %s. This file should be in the same directory of SMMarble.exe.\n", FESTFILEPATH);
+        return -1;
+    }
+    
+    printf("\n\nReading festival card component......\n");
+    while (fscanf(fp,"%s%i",name,&type)==2) //read a festival card string
+    {
+        //store the parameter set
+    }
+    fclose(fp);
+    printf("Total number of festival cards : %i\n", festival_nr);
+    #endif
 
     // 2. Player configuration ---------------------------------------------------------------------------------
     do {

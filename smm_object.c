@@ -116,4 +116,3 @@ int smmObj_getNodeenergy(void* obj)
 
 
 
-
